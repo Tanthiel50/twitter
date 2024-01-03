@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -22,3 +24,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/users', App\Http\Controllers\UserController::class)->except('index', 'create','store');
+Route::resource('/post', App\Http\Controllers\PostController::class);
+Route::get('/post/{post}', [PostController::class, 'show'])->name('post.show');
+Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+
